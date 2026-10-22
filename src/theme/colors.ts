@@ -1,3 +1,6 @@
+import headerLogo from '@/assets/codelink-header-logo.png';
+import headerLogoDark from '@/assets/codelink-header-logo-dark-transparent.png';
+
 /**
  * Official CodeLink SOLUTION brand colors — sampled from the logos.
  * Use these tokens everywhere. Do not introduce hues outside this palette.
@@ -34,7 +37,10 @@ export const brandRgb = {
 } as const;
 
 export const logos = {
-  header: '/IMG-20260829-WA0000.jpg',
+  /** Light header / light surfaces */
+  header: headerLogo,
+  /** Dark mode + dark hero overlays */
+  headerDark: headerLogoDark,
   footer: '/IMG-20260829-WA0001.jpg',
 } as const;
 

@@ -27,25 +27,37 @@ export function FillItem({
   return (
     <button
       type="button"
-      className={`brand-fill-item ${active ? 'is-active' : ''} ${dense ? 'is-dense' : ''}`}
+      className={`brand-fill-item self-start ${active ? 'is-active' : ''} ${dense ? 'is-dense' : ''}`}
       onClick={() => {
         onClick?.();
         navigate(href);
       }}
     >
       <span className="fill-wash" />
-      <span className={`relative z-10 flex ${compact || dense ? 'items-center gap-3' : 'items-start gap-3.5'}`}>
+      <span className={`relative z-10 flex items-center ${dense ? 'gap-3' : 'gap-3.5'}`}>
         {icon && (
-          <span className={`fill-icon mt-0.5 shrink-0 flex items-center justify-center rounded-lg ${dense ? 'h-8 w-8' : 'h-10 w-10 rounded-xl'}`}>
-            <NavIcon name={icon} className={dense ? 'h-4 w-4' : 'h-5 w-5'} />
+          <span
+            className={`fill-icon shrink-0 flex items-center justify-center ${
+              dense ? 'h-7 w-7' : 'h-8 w-8'
+            }`}
+          >
+            <NavIcon name={icon} className={dense ? 'h-[22px] w-[22px]' : 'h-6 w-6'} />
           </span>
         )}
         <span className="min-w-0">
-          <span className={`fill-title block font-semibold leading-snug ${dense ? 'text-[14.5px]' : 'text-[16px]'}`}>
+          <span
+            className={`fill-title block font-medium leading-tight line-clamp-1 ${
+              dense ? 'text-[13px]' : 'text-[14px]'
+            }`}
+          >
             {title}
           </span>
           {description && (
-            <span className={`fill-desc block font-medium leading-relaxed ${dense ? 'mt-0.5 text-[12.5px]' : 'mt-1 text-[13.5px]'}`}>
+            <span
+              className={`fill-desc block font-normal leading-snug line-clamp-1 ${
+                dense ? 'mt-0.5 text-[11.5px]' : 'mt-0.5 text-[12px]'
+              }`}
+            >
               {description}
             </span>
           )}

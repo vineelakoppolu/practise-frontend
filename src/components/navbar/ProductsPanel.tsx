@@ -11,27 +11,27 @@ export function ProductsPanel({ onClose }: { onClose: () => void }) {
   const active = productCategories.find((c) => c.id === activeId) ?? productCategories[0];
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] min-h-[420px]">
-      <aside className="pr-4 lg:pr-6 lg:border-r" style={{ borderColor: 'rgba(24,99,186,0.1)' }}>
-        <div className="space-y-1">
+    <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr] min-h-[320px]">
+      <aside className="pr-3 lg:pr-4 lg:border-r" style={{ borderColor: 'rgba(24,99,186,0.1)' }}>
+        <div className="space-y-0">
           {productCategories.map((category) => {
             const selected = category.id === activeId;
             return (
               <button
                 key={category.id}
                 type="button"
-                className={`brand-fill-item ${selected ? 'is-active' : ''}`}
+                className={`brand-fill-item is-dense ${selected ? 'is-active' : ''}`}
                 onMouseEnter={() => setActiveId(category.id)}
                 onFocus={() => setActiveId(category.id)}
                 onClick={() => setActiveId(category.id)}
               >
                 <span className="fill-wash" />
-                <span className="relative z-10 flex items-center justify-between gap-3">
-                  <span className="fill-title text-[16px] font-semibold">
+                <span className="relative z-10 flex items-center justify-between gap-2">
+                  <span className="fill-title text-[13.5px] font-medium">
                     {category.label}
                   </span>
                   <ChevronRight
-                    className={`h-4 w-4 transition-colors ${selected ? 'text-white' : 'text-[#00B2FE]'}`}
+                    className={`h-3.5 w-3.5 ${selected ? 'text-white' : 'text-[#00B2FE]'}`}
                   />
                 </span>
               </button>
@@ -59,10 +59,10 @@ export function ProductsPanel({ onClose }: { onClose: () => void }) {
             exit={{ opacity: 0, x: -12 }}
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
           >
-            <h3 className="text-[28px] font-800 tracking-tight pr-12" style={{ color: colors.primary }}>
+            <h3 className="text-[20px] font-800 tracking-tight pr-10" style={{ color: colors.primary }}>
               {active.headline}
             </h3>
-            <p className="mt-2 text-sm max-w-xl" style={{ color: colors.textSecondary }}>
+            <p className="mt-1.5 text-[12.5px] max-w-xl" style={{ color: colors.textSecondary }}>
               {active.intro}{' '}
               <button
                 type="button"
@@ -77,12 +77,12 @@ export function ProductsPanel({ onClose }: { onClose: () => void }) {
               </button>
             </p>
 
-            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-2">
+            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-5 gap-y-0">
               {active.items.map((item) => (
                 <button
                   key={item.title}
                   type="button"
-                  className="brand-fill-item"
+                  className="brand-fill-item is-dense"
                   onClick={() => {
                     onClose();
                     navigate(item.href);
@@ -90,8 +90,8 @@ export function ProductsPanel({ onClose }: { onClose: () => void }) {
                 >
                   <span className="fill-wash" />
                   <span className="relative z-10 block">
-                    <span className="fill-title block text-[16px] font-semibold">{item.title}</span>
-                    <span className="fill-desc mt-1 block text-[13.5px] font-medium leading-relaxed">{item.description}</span>
+                    <span className="fill-title block text-[13.5px] font-medium leading-[1.35]">{item.title}</span>
+                    <span className="fill-desc mt-0.5 block text-[12px] font-normal leading-[1.4]">{item.description}</span>
                   </span>
                 </button>
               ))}

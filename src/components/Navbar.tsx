@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, ChevronLeft, ChevronRight, Menu, X } from 'lucide-react';
 import { colors, logos, royalAlpha } from '@/theme';
 import { useTheme } from '@/theme/ThemeProvider';
+import { resolveHomeHeroVersion } from '@/config/homeHero';
 import {
   serviceColumns,
   technologyColumns,
@@ -39,17 +40,37 @@ export default function Navbar() {
   const closeTimer = useRef<number>();
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams] = useSearchParams();
   const { isDark } = useTheme();
   const isHome = location.pathname === '/';
+  const isHeroV2 = isHome && resolveHomeHeroVersion(searchParams) === 2;
   const menuOpen = Boolean(openMenu || mobileOpen);
   const [scrolled, setScrolled] = useState(false);
+  const [headerVisible, setHeaderVisible] = useState(true);
+  const lastScrollY = useRef(0);
+  const useDarkLogo = isDark || (isHeroV2 && !scrolled && !menuOpen);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 16);
+    lastScrollY.current = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 16);
+
+      if (menuOpen || y < 24) {
+        setHeaderVisible(true);
+      } else if (y > lastScrollY.current + 6) {
+        setHeaderVisible(false);
+        setOpenMenu(null);
+      } else if (y < lastScrollY.current - 6) {
+        setHeaderVisible(true);
+      }
+
+      lastScrollY.current = y;
+    };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, [location.pathname]);
+  }, [location.pathname, menuOpen]);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -104,25 +125,29 @@ export default function Navbar() {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-[100]">
+    <header
+      className={`fixed top-0 left-0 right-0 z-[100] transition-transform duration-[350ms] ease-out ${
+        headerVisible ? 'translate-y-0' : '-translate-y-full'
+      }`}
+    >
       <nav
-        className={`header-sheen transition-[box-shadow,background,backdrop-filter] duration-300 ${isHome && !scrolled ? 'is-hero-home' : ''} ${scrolled ? 'is-scrolled' : ''} ${menuOpen ? 'is-solid' : ''}`}
+        className={`header-sheen transition-[box-shadow,background,backdrop-filter] duration-300 ${isHome && !scrolled ? 'is-hero-home' : ''} ${isHeroV2 && !scrolled ? 'is-hero-v2' : ''} ${scrolled ? 'is-scrolled' : ''} ${menuOpen ? 'is-solid' : ''}`}
         onMouseLeave={scheduleClose}
       >
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
-          <div className="flex items-center h-[80px] lg:h-[88px] gap-8 lg:gap-12">
+        <div className="max-w-[1440px] mx-auto px-5 lg:px-8">
+          <div className="header-bar flex items-center h-[var(--header-height)] gap-4 lg:gap-6 box-border">
             <motion.button
               type="button"
               onClick={() => go('/')}
-              className="flex items-center bg-transparent border-none cursor-pointer p-0 shrink-0"
+              className="header-logo flex items-center bg-transparent border-none cursor-pointer p-0 shrink-0"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               aria-label="CodeLink SOLUTION home"
             >
               <img
-                src={isDark ? logos.footer : logos.header}
+                src={useDarkLogo ? logos.headerDark : logos.header}
                 alt="CodeLink SOLUTION"
-                className="h-14 sm:h-16 lg:h-[72px] w-auto object-contain rounded-md"
+                className="header-logo__img"
               />
             </motion.button>
 
@@ -172,12 +197,12 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={() => go('/company')}
-                className="header-cta-shine hero-header-cta inline-flex items-center gap-2 rounded-full pl-5 pr-2 py-2 text-sm font-700 text-white"
-                style={{ background: colors.gradientPrimary, boxShadow: '0 8px 22px rgba(24,99,186,0.28)' }}
+                className="header-cta-shine hero-header-cta inline-flex items-center gap-1.5 rounded-full pl-5 pr-2 py-2 text-[15px] font-700 text-white"
+                style={{ background: colors.gradientPrimary, boxShadow: '0 6px 16px rgba(24,99,186,0.28)' }}
               >
                 Contact Us
                 <span className="hero-cta-pill__icon hero-cta-pill__icon--on-primary" aria-hidden>
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight className="h-3.5 w-3.5" />
                 </span>
               </button>
             </div>
@@ -215,11 +240,11 @@ export default function Navbar() {
                   background: 'var(--background)',
                   boxShadow: '0 28px 80px var(--shadow-blue)',
                   borderBottom: '1px solid var(--border-light)',
-                  maxHeight: 'calc(100vh - 88px)',
+                  maxHeight: 'calc(100vh - var(--header-height))',
                 }}
               >
                 <div className="h-[2px] w-full header-hairline" />
-                <div className={`w-full px-8 xl:px-12 ${openMenu === 'services' || openMenu === 'technology' ? 'pt-4 pb-0' : 'py-6'}`}>
+                <div className={`w-full px-6 xl:px-10 ${openMenu === 'services' || openMenu === 'technology' ? 'pt-3 pb-0' : 'py-5'}`}>
                   {openMenu === 'services' && <ServicesPanel onNavigate={() => setOpenMenu(null)} />}
                   {openMenu === 'technology' && <TechnologyPanel onNavigate={() => setOpenMenu(null)} />}
                   {openMenu === 'products' && <ProductsPanel onClose={() => setOpenMenu(null)} />}
@@ -234,7 +259,7 @@ export default function Navbar() {
       {openMenu && (
         <button
           type="button"
-          className="hidden xl:block fixed inset-0 top-[88px] -z-10"
+          className="hidden xl:block fixed inset-0 top-[var(--header-height)] -z-10"
           style={{ background: royalAlpha(0.18) }}
           aria-label="Close menu overlay"
           onClick={() => setOpenMenu(null)}
