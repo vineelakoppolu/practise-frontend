@@ -46,33 +46,39 @@ export default function HeroV2() {
           initial="hidden"
           animate="visible"
         >
-          <div className="hero-v2-copy hero-copy max-w-[560px]">
+          <div className="hero-v2-copy max-w-[620px]">
             <motion.p
               variants={itemVariants}
-              className="hero-eyebrow mb-3 text-xs font-700 uppercase tracking-[0.14em] text-[#7DD3FC]/90 md:mb-3.5 md:text-[13px]"
+              className="hero-eyebrow mb-2.5 text-[11px] font-700 uppercase tracking-[0.14em] text-[#7DD3FC]/90 sm:mb-3 sm:text-xs md:mb-3.5 md:text-[13px]"
             >
               Enterprise AI SaaS Platform
             </motion.p>
 
-            <motion.h1 variants={itemVariants} className="hero-headline hero-v2-headline mb-3.5 md:mb-4">
-              <span className="hero-headline-line">Powering Businesses with</span>{' '}
-              <span className="hero-headline-line">
-                Smarter <span className="hero-headline-accent">Technology &amp;</span>
-              </span>{' '}
-              <span className="hero-headline-line hero-headline-accent">Digital Solutions</span>
+            <motion.h1 variants={itemVariants} className="hero-v2-headline mb-3 md:mb-4">
+              <span className="hero-v2-headline__line">Powering Businesses with</span>
+              <span className="hero-v2-headline__line">
+                Smarter <span className="hero-v2-headline__accent">Technology &amp;</span>
+              </span>
+              <span className="hero-v2-headline__line hero-v2-headline__accent">Digital Solutions</span>
             </motion.h1>
 
             <motion.p
               variants={itemVariants}
-              className="hero-v2-subcopy mb-5 max-w-[480px] md:mb-6"
+              className="hero-v2-subcopy mb-0 max-w-[480px]"
             >
               Unify workflows, automate tasks, and power smarter operations from one platform built
               for modern teams.
             </motion.p>
+          </div>
 
+          <motion.div variants={itemVariants} className="hero-v2-visual">
+            <FaviconParallax />
+          </motion.div>
+
+          <div className="hero-v2-actions max-w-[620px]">
             <motion.div
               variants={itemVariants}
-              className="flex flex-col gap-3 sm:flex-row sm:items-center"
+              className="hero-v2-cta-row flex flex-col gap-3 sm:flex-row sm:items-center"
             >
               <button
                 type="button"
@@ -87,14 +93,14 @@ export default function HeroV2() {
               <button
                 type="button"
                 onClick={() => navigate('/solutions')}
-                className="hero-v2-secondary inline-flex items-center gap-2 px-2 py-2 text-base font-700 text-white/90 transition-colors hover:text-[#00B2FE]"
+                className="hero-v2-secondary inline-flex items-center justify-center gap-2 px-2 py-2 text-[0.95rem] font-700 text-white/90 transition-colors hover:text-[#00B2FE] sm:justify-start sm:text-base"
               >
                 Our Work
                 <ArrowRight className="h-4 w-4" />
               </button>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="hero-stats hero-v2-stats mt-8 md:mt-10">
+            <motion.div variants={itemVariants} className="hero-stats hero-v2-stats">
               {heroStats.map((stat, index) => (
                 <div key={stat.label} className="hero-stat">
                   {index > 0 && <span className="hero-stats__divider" aria-hidden />}
@@ -106,10 +112,6 @@ export default function HeroV2() {
               ))}
             </motion.div>
           </div>
-
-          <motion.div variants={itemVariants} className="hero-v2-visual">
-            <FaviconParallax />
-          </motion.div>
         </motion.div>
       </div>
     </section>

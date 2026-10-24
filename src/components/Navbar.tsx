@@ -8,7 +8,7 @@ import { resolveHomeHeroVersion } from '@/config/homeHero';
 import {
   serviceColumns,
   technologyColumns,
-  companyItems,
+  companyColumns,
   productCategories,
   type NavColumn,
   type NavItemLink,
@@ -244,7 +244,7 @@ export default function Navbar() {
                 }}
               >
                 <div className="h-[2px] w-full header-hairline" />
-                <div className={`w-full px-6 xl:px-10 ${openMenu === 'services' || openMenu === 'technology' ? 'pt-3 pb-0' : 'py-5'}`}>
+                <div className={`w-full px-6 xl:px-10 ${openMenu === 'services' || openMenu === 'technology' || openMenu === 'company' ? 'pt-3 pb-0' : 'py-5'}`}>
                   {openMenu === 'services' && <ServicesPanel onNavigate={() => setOpenMenu(null)} />}
                   {openMenu === 'technology' && <TechnologyPanel onNavigate={() => setOpenMenu(null)} />}
                   {openMenu === 'products' && <ProductsPanel onClose={() => setOpenMenu(null)} />}
@@ -369,6 +369,7 @@ function mobileLevelKey(level: MobileLevel) {
 function columnsFor(key: MenuKey): NavColumn[] | null {
   if (key === 'services') return serviceColumns;
   if (key === 'technology') return technologyColumns;
+  if (key === 'company') return companyColumns;
   return null;
 }
 
@@ -413,16 +414,6 @@ function MobileSectionList({
   onOpenColumn: (columnTitle: string, index: number) => void;
   onLeafNavigate: () => void;
 }) {
-  if (sectionKey === 'company') {
-    return (
-      <>
-        {companyItems.map((item) => (
-          <FillItem key={item.title} {...item} compact onClick={onLeafNavigate} />
-        ))}
-      </>
-    );
-  }
-
   if (sectionKey === 'products') {
     return (
       <>

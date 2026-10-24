@@ -94,7 +94,7 @@ function GlowFace({
     <motion.button
       type="button"
       onClick={onClick}
-      className={`flex items-center justify-center gap-1 whitespace-nowrap px-3.5 py-1.5 rounded-md bg-transparent text-[15.5px] font-bold text-[var(--header-fg,var(--text-primary))] ${
+      className={`flex items-center justify-center gap-1 whitespace-nowrap px-3.5 py-1.5 rounded-md bg-transparent text-[15.5px] font-medium text-[var(--header-fg,var(--text-primary))] ${
         overlay ? 'absolute inset-0 z-10' : 'relative z-10'
       }`}
       variants={variants}

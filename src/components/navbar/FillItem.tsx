@@ -46,7 +46,7 @@ export function FillItem({
         )}
         <span className="min-w-0">
           <span
-            className={`fill-title block font-medium leading-tight line-clamp-1 ${
+            className={`fill-title block font-700 leading-tight line-clamp-1 ${
               dense ? 'text-[13px]' : 'text-[14px]'
             }`}
           >

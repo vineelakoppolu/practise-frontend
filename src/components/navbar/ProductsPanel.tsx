@@ -27,7 +27,7 @@ export function ProductsPanel({ onClose }: { onClose: () => void }) {
               >
                 <span className="fill-wash" />
                 <span className="relative z-10 flex items-center justify-between gap-2">
-                  <span className="fill-title text-[13.5px] font-medium">
+                  <span className="fill-title text-[13.5px] font-700">
                     {category.label}
                   </span>
                   <ChevronRight
@@ -90,7 +90,7 @@ export function ProductsPanel({ onClose }: { onClose: () => void }) {
                 >
                   <span className="fill-wash" />
                   <span className="relative z-10 block">
-                    <span className="fill-title block text-[13.5px] font-medium leading-[1.35]">{item.title}</span>
+                    <span className="fill-title block text-[13.5px] font-700 leading-[1.35]">{item.title}</span>
                     <span className="fill-desc mt-0.5 block text-[12px] font-normal leading-[1.4]">{item.description}</span>
                   </span>
                 </button>

@@ -8,8 +8,8 @@
  */
 export type HomeHeroVersion = 1 | 2;
 
-/** Change this to 2 to ship the favicon parallax hero by default. */
-export const HOME_HERO_VERSION: HomeHeroVersion = 1;
+/** Default home hero: V2 dark favicon / orbit parallax. Use `/?hero=1` to preview classic. */
+export const HOME_HERO_VERSION: HomeHeroVersion = 2;
 
 export function resolveHomeHeroVersion(searchParams?: URLSearchParams | string | null): HomeHeroVersion {
   const raw =

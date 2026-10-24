@@ -1,12 +1,15 @@
+import { useState } from 'react';
 import {
   BarChart3,
   Bot,
-  Brain,
   Cloud,
-  Cpu,
+  Code2,
   Database,
   Gem,
+  Smartphone,
   Sparkles,
+  TabletSmartphone,
+  Terminal,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -29,25 +32,29 @@ const groups: Group[] = [
     label: 'Front-End',
     accent: '#61DAFB',
     items: [
-      { name: 'React', icon: '/tech-icons/react.svg', tint: '#61DAFB' },
+      { name: 'React JS', icon: '/tech-icons/react.svg', tint: '#61DAFB' },
       { name: 'Angular', icon: '/tech-icons/angular.svg', tint: '#DD0031' },
-      { name: 'Next.js', icon: '/tech-icons/nextdotjs.svg', tint: '#111111' },
+      { name: 'Next JS', icon: '/tech-icons/nextdotjs.svg', tint: '#111111' },
+      { name: 'Vue JS', icon: '/tech-icons/vuedotjs.svg', tint: '#4FC08D' },
     ],
   },
   {
     label: 'Back-End',
     accent: '#5FA04E',
     items: [
-      { name: 'Node.js', icon: '/tech-icons/nodedotjs.svg', tint: '#5FA04E' },
-      { name: 'Express.js', icon: '/tech-icons/express.svg', tint: '#111111' },
+      { name: 'Node JS', icon: '/tech-icons/nodedotjs.svg', tint: '#5FA04E' },
+      { name: 'PHP', icon: '/tech-icons/php.svg', mark: Code2, tint: '#777BB4' },
+      { name: 'Python', icon: '/tech-icons/python.svg', mark: Terminal, tint: '#3776AB' },
       { name: '.NET', icon: '/tech-icons/dotnet.svg', tint: '#512BD4', wordmark: true },
-      { name: 'PHP', icon: '/tech-icons/php.svg', tint: '#777BB4' },
+      { name: 'Express.js', icon: '/tech-icons/express.svg', tint: '#111111' },
     ],
   },
   {
     label: 'Mobile',
     accent: '#02569B',
     items: [
+      { name: 'iOS', icon: '/tech-icons/apple.svg', mark: Smartphone, tint: '#000000' },
+      { name: 'Android', icon: '/tech-icons/android.svg', mark: TabletSmartphone, tint: '#3DDC84' },
       { name: 'Flutter', icon: '/tech-icons/flutter.svg', tint: '#02569B' },
       { name: 'React Native', icon: '/tech-icons/react.svg', tint: '#61DAFB' },
     ],
@@ -56,11 +63,7 @@ const groups: Group[] = [
     label: 'Trending Technologies',
     accent: '#7C3AED',
     items: [
-      { name: 'Artificial Intelligence (AI)', mark: Brain, tint: '#7C3AED' },
-      { name: 'Internet of Things (IoT)', mark: Cpu, tint: '#0891B2' },
-      { name: 'TensorFlow', icon: '/tech-icons/tensorflow.svg', tint: '#FF6F00' },
       { name: 'PyTorch', icon: '/tech-icons/pytorch.svg', tint: '#EE4C2C' },
-      { name: 'Scikit-learn', icon: '/tech-icons/scikitlearn.svg', tint: '#F7931E' },
       { name: 'UiPath', icon: '/tech-icons/uipath.svg', tint: '#FA4616' },
       { name: 'Automation Anywhere', mark: Bot, tint: '#EA580C' },
       { name: 'Blue Prism', mark: Gem, tint: '#0073CF' },
@@ -89,16 +92,19 @@ const groups: Group[] = [
 ];
 
 function TechMark({ item }: { item: Tech }) {
-  if (item.icon) {
+  const [imgFailed, setImgFailed] = useState(false);
+  const Mark = item.mark;
+
+  if (item.icon && !imgFailed) {
     return (
       <img
         src={item.icon}
         alt=""
         className={item.wordmark ? 'h-4 w-10 shrink-0 object-contain' : 'h-5 w-5 shrink-0 object-contain'}
+        onError={() => setImgFailed(true)}
       />
     );
   }
-  const Mark = item.mark;
   if (!Mark) return null;
   return <Mark className="h-5 w-5 shrink-0" style={{ color: item.tint }} />;
 }

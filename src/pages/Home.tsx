@@ -4,6 +4,7 @@ import ITServices from '../components/ITServices';
 import ProductsEcosystem from '../components/ProductsEcosystem';
 import IndustriesWeServe from '../components/IndustriesWeServe';
 import TechStacksWeUse from '../components/TechStacksWeUse';
+import ProjectEstimator from '../components/ProjectEstimator';
 import Blog from '../components/Blog';
 import Testimonials from '../components/Testimonials';
 import CaseStudies from '../components/CaseStudies';
@@ -30,6 +31,7 @@ export default function HomePage() {
         />
         <IndustriesWeServe />
         <TechStacksWeUse />
+        <ProjectEstimator />
         <CaseStudies />
         <Testimonials />
         <Blog />

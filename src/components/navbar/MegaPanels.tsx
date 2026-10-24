@@ -2,8 +2,7 @@ import { ArrowRight, ClipboardList, FileCheck, Users } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { colors, logos } from '@/theme';
 import {
-  companyFeatured,
-  companyItems,
+  companyColumns,
   serviceColumns,
   technologyColumns,
   type NavColumn,
@@ -32,46 +31,13 @@ export function TechnologyPanel({ onNavigate }: { onNavigate: () => void }) {
 }
 
 export function CompanyPanel({ onNavigate }: { onNavigate: () => void }) {
-  const navigate = useNavigate();
-
   return (
-    <div className="flex justify-center">
-      <div className="flex w-full max-w-[920px] flex-col items-stretch gap-6 lg:flex-row lg:items-start lg:gap-6">
-        <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-          {companyItems.map((item) => (
-            <FillItem key={item.title} {...item} dense onClick={onNavigate} />
-          ))}
-        </div>
-
-        <button
-          type="button"
-          onClick={() => {
-            onNavigate();
-            navigate(companyFeatured.href);
-          }}
-          className="relative w-full overflow-hidden rounded-2xl p-6 text-left group min-h-[220px] lg:w-[400px] lg:shrink-0"
-          style={{ background: colors.gradientPrimary }}
-        >
-          <span className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_80%_20%,#ffffff_0%,transparent_45%)]" />
-          <span className="absolute -right-6 -bottom-10 h-40 w-40 rounded-3xl rotate-12 border border-white/25 bg-white/10 backdrop-blur-md transition-transform duration-500 group-hover:-translate-y-2 group-hover:-rotate-6" />
-          <span className="absolute right-10 bottom-10 h-28 w-20 rounded-2xl -rotate-6 border border-white/30 bg-white/15 backdrop-blur-md transition-transform duration-500 group-hover:translate-y-1 group-hover:rotate-3" />
-          <img
-            src={logos.footer}
-            alt=""
-            className="relative mb-4 h-8 w-auto rounded-md object-contain"
-          />
-          <h3 className="relative mb-2 text-xl font-800 leading-tight text-white">
-            {companyFeatured.title}
-          </h3>
-          <p className="relative mb-5 max-w-xs text-xs leading-relaxed text-white/80">
-            {companyFeatured.description}
-          </p>
-          <span className="relative inline-flex items-center gap-2 rounded-full border border-white/50 px-4 py-1.5 text-xs font-700 text-white transition-colors duration-300 group-hover:bg-white group-hover:text-[#1863BA]">
-            {companyFeatured.cta}
-            <ArrowRight className="h-3.5 w-3.5" />
-          </span>
-        </button>
-      </div>
+    <div className="pb-2">
+      <MegaColumnGrid
+        columns={companyColumns}
+        colsClass="grid-cols-1 sm:grid-cols-2"
+        onNavigate={onNavigate}
+      />
     </div>
   );
 }
@@ -139,7 +105,7 @@ function MegaColumnGrid({
 function ColumnHeading({ children }: { children: string }) {
   return (
     <div className="mb-1.5 self-start">
-      <h3 className="text-[13.5px] font-medium tracking-tight" style={{ color: 'var(--text-primary)' }}>
+      <h3 className="text-[13.5px] font-700 tracking-tight" style={{ color: 'var(--text-primary)' }}>
         {children}
       </h3>
       <div className="mt-1.5 h-px w-full bg-gradient-to-r from-[#00B2FE] via-[#1863BA]/30 to-transparent" />

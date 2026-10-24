@@ -1,9 +1,10 @@
-import { useCallback, useRef, type MouseEvent } from 'react';
-import favicon from '@/assets/codelink-favicon-dark-white.png';
+import { useCallback, useRef, type CSSProperties, type MouseEvent } from 'react';
+import orbitLines from '@/assets/orbit_lines_transparent.png';
+import logoHalves from '@/assets/Glossy Neon Infinity Logo Halves.png';
 
 /**
- * Codevian-style hero mark: large favicon + same-shape outline rings that follow the cursor.
- * Parallax math mirrors their #arrow / #arrowContainer mousemove handler.
+ * Hero mark: CO silhouette filled with Codevian red/blue gradient,
+ * nested in the orbit lines frame. Parallax on mousemove.
  */
 export default function FaviconParallax() {
   const markRef = useRef<HTMLDivElement>(null);
@@ -38,6 +39,10 @@ export default function FaviconParallax() {
     outline.style.transform = 'translate(0, 0)';
   }, []);
 
+  const maskStyle = {
+    ['--hero-mark-mask' as string]: `url(${logoHalves})`,
+  } as CSSProperties;
+
   return (
     <div
       className="hero-v2-parallax"
@@ -47,26 +52,20 @@ export default function FaviconParallax() {
     >
       <div className="hero-v2-parallax__glow" />
 
-      {/* Same-shape outline rings (Codevian arrow-outline layers) */}
-      <div ref={outlineRef} className="hero-v2-parallax__outline">
-        <span className="hero-v2-parallax__ring hero-v2-parallax__ring--1">
-          <img src={favicon} alt="" />
-        </span>
-        <span className="hero-v2-parallax__ring hero-v2-parallax__ring--2">
-          <img src={favicon} alt="" />
-        </span>
-        <span className="hero-v2-parallax__ring hero-v2-parallax__ring--3">
-          <img src={favicon} alt="" />
-        </span>
-        <span className="hero-v2-parallax__ring hero-v2-parallax__ring--4">
-          <img src={favicon} alt="" />
-        </span>
+      {/* CO shape masked over rotating dark red / blue fill */}
+      <div ref={markRef} className="hero-v2-parallax__mark" style={maskStyle}>
+        <div className="hero-v2-parallax__fill">
+          <div className="hero-v2-parallax__gradient" />
+        </div>
       </div>
 
-      {/* Solid mark — ~47.5% of container like Codevian’s #arrow */}
-      <div ref={markRef} className="hero-v2-parallax__mark">
-        <div className="hero-v2-parallax__shimmer" />
-        <img src={favicon} alt="" className="hero-v2-parallax__favicon" />
+      {/* Orbit lines sit on top so rings wrap the logo */}
+      <div ref={outlineRef} className="hero-v2-parallax__outline">
+        <img
+          src={orbitLines}
+          alt=""
+          className="hero-v2-parallax__orbit"
+        />
       </div>
     </div>
   );
